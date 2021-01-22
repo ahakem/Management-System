@@ -5,6 +5,7 @@ import { AppBar, Toolbar, Typography, IconButton } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
+import Avatar from '@material-ui/core/Avatar';
 
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -38,7 +39,7 @@ const AppToolBar = ({ open, handleDrawerToggle }) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );
 
@@ -81,8 +82,8 @@ const AppToolBar = ({ open, handleDrawerToggle }) => {
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
+                <Badge variant="dot"badgeContent={17} classes={{colorPrimary:classes.badgeColor}} color="primary">
+                  <NotificationsIcon className={classes.notificationIcon} />
                 </Badge>
               </IconButton>
               <IconButton
@@ -93,7 +94,8 @@ const AppToolBar = ({ open, handleDrawerToggle }) => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <AccountCircle />
+                <Avatar alt="Ahmed Hakim" src="/hakim.jpg" />
+
               </IconButton>
             </div>
           </div>
@@ -124,6 +126,9 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  badgeColor:{
+    background:"#FE4D97"
+  },
   title: {
     flexGrow: 1,
     display: "none",
@@ -147,6 +152,7 @@ const useStyles = makeStyles((theme) => ({
       width: "auto",
     },
   },
+  notificationIcon:{color: theme.palette.secondary.main,},
   searchIcon: {
     padding: theme.spacing(0, 2),
     height: "100%",
