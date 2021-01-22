@@ -108,6 +108,7 @@ const drawerWidth = 280;
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
+    background:"#fff",
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

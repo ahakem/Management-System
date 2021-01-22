@@ -6,7 +6,7 @@ import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutli
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-const Actions = () => {
+const Actions = ({handleRequestSort, count, page, onChangePage, rowsPerPage}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [sortType, setSortType] = React.useState('date');
@@ -23,16 +23,16 @@ const Actions = () => {
 
   return (
     <Box my={4} className={classes.root}>
-      <Typography className={classes.pagenationNo}>1-10 of 40</Typography>
+      <Typography className={classes.pagenationNo}>{((page+1) * rowsPerPage)- rowsPerPage + 1}-{(page+1) * rowsPerPage} of {count}</Typography>
       <ButtonGroup
         className={classes.pagenationBtns}
         color="secondary"
         aria-label="outlined secondary button group"
       >
-        <Button>
+        <Button disabled={page == 0} onClick={()=>{onChangePage(null,page-1)}}>
           <ArrowBackIosOutlinedIcon />
         </Button>
-        <Button>
+        <Button disabled={Math.floor(count/rowsPerPage) == page} onClick={()=>{onChangePage(null,page+1)}}>
           <ArrowForwardIosOutlinedIcon />
         </Button>
       </ButtonGroup>
@@ -50,7 +50,7 @@ const Actions = () => {
         TransitionComponent={Fade}
         className={classes.menu}
       >
-        <MenuItem className={classes.menuItem} onClick={()=>{handleClose("date")}}>Date</MenuItem>
+        <MenuItem className={classes.menuItem} onClick={()=>{handleRequestSort(null,"date"),handleClose("date")}}>Date</MenuItem>
         <MenuItem onClick={()=>{handleClose("status")}}>status</MenuItem>
       </Menu>
     </div>
