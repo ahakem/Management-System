@@ -27,9 +27,18 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
- 
-   
- 
+    MuiButton: {
+      root: {
+        textTransform:"none",
+        fontWeight:"normal",
+        height:46,
+        fontWeight:400,
+      },
+      outlined:{
+        background:"#fff",
+        color:'#778CA2',
+      }
+    },
  
   },
 });

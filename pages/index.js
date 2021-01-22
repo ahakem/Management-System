@@ -3,6 +3,7 @@ import {Container, Typography, Box, Divider} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Filter from 'components/Filter'
 import  Analytics from 'components/Analytics'
+import DataGrid from 'components/shared/DataGrid'
 export default function Index() {
   const classes = useStyles();
 
@@ -21,6 +22,7 @@ export default function Index() {
       <Filter/>
       <Divider className={classes.divider}/>
       <Analytics/>
+      <DataGrid />
     </Container>
   );
 }

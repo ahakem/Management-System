@@ -6,6 +6,7 @@ const TextField = withStyles((theme) => ({
     border: "1px solid red",
     backgroundColor: theme.palette.common.white,
     borderRadius: 4,
+    height:46,
     border: "1px solid #ced4da",
     "label + &": {
       // marginTop: theme.spacing(3),
