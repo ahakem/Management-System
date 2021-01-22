@@ -8,6 +8,9 @@ const theme = createMuiTheme({
       'Rubik',
       'sans-serif',
     ].join(','),
+    h5:{
+      fontSize:18,
+    }
   },
   palette: {
     primary: {
@@ -22,6 +25,12 @@ const theme = createMuiTheme({
     background: {
       default: '#F8FAFB',
     },
+  },
+  overrides: {
+ 
+   
+ 
+ 
   },
 });
 
