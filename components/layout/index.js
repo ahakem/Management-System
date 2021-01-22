@@ -19,7 +19,7 @@ import AppToolBar from 'components/layout/AppToolBar'
 export default function Layout(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setOpen(!open);

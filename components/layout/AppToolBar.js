@@ -10,12 +10,10 @@ import Avatar from '@material-ui/core/Avatar';
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
 const AppToolBar = ({ open, handleDrawerToggle }) => {
   const classes = useStyles();
-  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
 

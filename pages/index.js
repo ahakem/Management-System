@@ -1,7 +1,8 @@
 import React from "react";
-import {Container, Typography, Box} from "@material-ui/core";
+import {Container, Typography, Box, Divider} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Filter from 'components/Filter'
+import  Analytics from 'components/Analytics'
 export default function Index() {
   const classes = useStyles();
 
@@ -18,6 +19,8 @@ export default function Index() {
         </Typography>
       </Box>
       <Filter/>
+      <Divider className={classes.divider}/>
+      <Analytics/>
     </Container>
   );
 }
@@ -26,4 +29,7 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     color: theme.palette.secondary.main,
   },
+  divider:{
+    margin:theme.spacing(5,0)
+  }
 }));
