@@ -1,20 +1,29 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from 'src/Link';
-
+import React from "react";
+import {Container, Typography, Box} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Filter from 'components/Filter'
 export default function Index() {
+  const classes = useStyles();
+
   return (
-    <Container maxWidth="lg">
-      <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
+    <Container maxWidth="xl">
+      <Box my={2}>
+        <Typography
+          className={classes.heading}
+          variant="h5"
+          component="h1"
+          gutterBottom
+        >
+          Fuel History
         </Typography>
-        <Link href="/about" color="secondary">
-          Go to the about page
-        </Link>
       </Box>
+      <Filter/>
     </Container>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  heading: {
+    color: theme.palette.secondary.main,
+  },
+}));
