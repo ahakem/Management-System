@@ -29,10 +29,10 @@ const Actions = ({handleRequestSort, count, page, onChangePage, rowsPerPage}) =>
         color="secondary"
         aria-label="outlined secondary button group"
       >
-        <Button disabled={page == 0} onClick={()=>{onChangePage(null,page-1)}}>
+        <Button disabled={page == 0} onClick={()=>{onChangePage(page-1)}}>
           <ArrowBackIosOutlinedIcon />
         </Button>
-        <Button disabled={Math.floor(count/rowsPerPage) == page} onClick={()=>{onChangePage(null,page+1)}}>
+        <Button disabled={Math.floor(count/rowsPerPage) == page} onClick={()=>{onChangePage(page+1)}}>
           <ArrowForwardIosOutlinedIcon />
         </Button>
       </ButtonGroup>
@@ -50,8 +50,8 @@ const Actions = ({handleRequestSort, count, page, onChangePage, rowsPerPage}) =>
         TransitionComponent={Fade}
         className={classes.menu}
       >
-        <MenuItem className={classes.menuItem} onClick={()=>{handleRequestSort(null,"date"),handleClose("date")}}>Date</MenuItem>
-        <MenuItem onClick={()=>{handleClose("status")}}>status</MenuItem>
+        <MenuItem className={classes.menuItem} onClick={()=>{handleRequestSort("date"),handleClose("date")}}>Date</MenuItem>
+        <MenuItem onClick={()=>{handleRequestSort("name"),handleClose("status")}}>status</MenuItem>
       </Menu>
     </div>
     </Box>
