@@ -18,7 +18,7 @@ const Actions = ({handleRequestSort, count, page, onChangePage, rowsPerPage}) =>
 
   const handleClose = (type) => {
     setAnchorEl(null);
-    setSortType(type)
+    type != sortType && setSortType(type)
   };
 
   return (
