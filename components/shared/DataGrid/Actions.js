@@ -30,9 +30,12 @@ const Actions = ({
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (type) => {
+  const handleClose = () => {
     setAnchorEl(null);
-    type != sortType && setSortType(type);
+  };
+  const callSorter = (type) => {
+    setSortType(type);
+    handleClose();
   };
   const Lastrow = (page + 1) * rowsPerPage;
   return (
@@ -87,29 +90,33 @@ const Actions = ({
         >
           <MenuItem
             className={classes.menuItem}
+            disabled={sortType === "date"}
             onClick={() => {
-              handleRequestSort("date"), handleClose("date");
+              handleRequestSort("date"), callSorter("date");
             }}
           >
             Date
           </MenuItem>
           <MenuItem
+            disabled={sortType === "status"}
             onClick={() => {
-              handleRequestSort("status"), handleClose("status");
+              handleRequestSort("status"), callSorter("status");
             }}
           >
             status
           </MenuItem>
           <MenuItem
+            disabled={sortType === "odometer"}
             onClick={() => {
-              handleRequestSort("odometer"), handleClose("odometer");
+              handleRequestSort("odometer"), callSorter("odometer");
             }}
           >
             odometer
           </MenuItem>
           <MenuItem
+            disabled={sortType === "cost"}
             onClick={() => {
-              handleRequestSort("cost"), handleClose("cost");
+              handleRequestSort("cost"), callSorter("cost");
             }}
           >
             cost
