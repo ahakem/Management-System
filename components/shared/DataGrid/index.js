@@ -1,13 +1,15 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Paper from "@material-ui/core/Paper";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Paper,
+} from "@material-ui/core";
 import moment from "moment";
 import Actions from "components/shared/DataGrid/Actions";
 
@@ -48,7 +50,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox"></TableCell>
+        {/* <TableCell padding="checkbox"></TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -65,11 +67,16 @@ function EnhancedTableHead(props) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    position: "relative",
   },
   paper: {
-    width: "100%",
+    overflowX: "auto",
     marginBottom: theme.spacing(2),
+    position: "absolute",
+    top: 64,
+    minHeight: 200,
+    left: 0,
+    right: 0,
   },
   table: {
     minWidth: 750,
@@ -82,7 +89,6 @@ export default function DataGrid() {
   const [page, setPage] = useState(0);
   const [data, setData] = useState(rows);
   const rowsPerPage = 10;
-
   const handleChangePage = (newPage) => {
     setPage(newPage);
   };
@@ -95,6 +101,7 @@ export default function DataGrid() {
   useEffect(() => {
     SortData("date");
   }, []);
+
   return (
     <div className={classes.root}>
       <Actions
@@ -112,17 +119,14 @@ export default function DataGrid() {
             size={"medium"}
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
-              classes={classes}
-              rowCount={rows.length}
-            />
+            <EnhancedTableHead classes={classes} rowCount={rows.length} />
             <TableBody>
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   return (
                     <TableRow hover tabIndex={-1} key={row.name}>
-                      <TableCell padding="checkbox"></TableCell>
+                      {/* <TableCell padding="checkbox"></TableCell> */}
                       <TableCell component="th" scope="row" padding="none">
                         {row.name}
                       </TableCell>
