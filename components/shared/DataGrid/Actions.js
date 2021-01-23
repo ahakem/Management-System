@@ -51,7 +51,7 @@ const Actions = ({handleRequestSort, count, page, onChangePage, rowsPerPage}) =>
         className={classes.menu}
       >
         <MenuItem className={classes.menuItem} onClick={()=>{handleRequestSort("date"),handleClose("date")}}>Date</MenuItem>
-        <MenuItem onClick={()=>{handleRequestSort("name"),handleClose("status")}}>status</MenuItem>
+        <MenuItem onClick={()=>{handleRequestSort("status"),handleClose("status")}}>status</MenuItem>
       </Menu>
     </div>
     </Box>

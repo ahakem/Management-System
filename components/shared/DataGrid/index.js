@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import Actions from "components/shared/DataGrid/Actions";
+import { axios, urls } from "config/axios";
 
 function createData(name, date, fat, carbs, protein) {
   return { name, date, fat, carbs, protein };
@@ -33,37 +34,6 @@ const rows = [
   createData("Active13", new Date("2021-1-1"), 18.0, 63, 4.0),
 ];
 
-const headCells = [
-  {
-    id: "status",
-    numeric: false,
-    disablePadding: true,
-    label: "status",
-  },
-  { id: "date", numeric: true, disablePadding: false, label: "Date" },
-  { id: "fat", numeric: true, disablePadding: false, label: "Fat (g)" },
-  { id: "carbs", numeric: true, disablePadding: false, label: "Carbs (g)" },
-  { id: "protein", numeric: true, disablePadding: false, label: "Protein (g)" },
-];
-
-function EnhancedTableHead(props) {
-  return (
-    <TableHead>
-      <TableRow>
-        {/* <TableCell padding="checkbox"></TableCell> */}
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "default"}
-          >
-            <TableSortLabel>{headCell.label}</TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,26 +57,43 @@ export default function DataGrid() {
   const classes = useStyles();
 
   const [page, setPage] = useState(0);
-  const [data, setData] = useState(rows);
-  const rowsPerPage = 10;
+  const [data, setData] = useState([]);
+  const [vehiclesNames, SetVehiclesNames] = useState({});
+
+  const rowsPerPage = 5;
   const handleChangePage = (newPage) => {
     setPage(newPage);
   };
 
   const SortData = (property) => {
+    
     const compare = (a, b) => (a[property] < b[property] ? -1 : 1);
 
     setData([...data.sort(compare)]);
   };
-  useEffect(() => {
-    SortData("date");
-  }, []);
 
+  useEffect(() => {
+    axios
+      .get(urls.vehicles)
+      .then((res) => {
+        setData(res.data.data.vehicles_info);
+        SetVehiclesNames(res.data.data.vehicles_names);
+        SortData("date")
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        //
+      });
+  }, []);
+ 
+  let currentDate = null;
   return (
     <div className={classes.root}>
       <Actions
         handleRequestSort={SortData}
-        count={rows.length}
+        count={data.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
@@ -119,24 +106,49 @@ export default function DataGrid() {
             size={"medium"}
             aria-label="enhanced table"
           >
-            <EnhancedTableHead classes={classes} rowCount={rows.length} />
+            <TableHead>
+              <TableRow>
+                <TableCell>Vehicle</TableCell>
+                <TableCell>Time</TableCell>
+                <TableCell>Total km</TableCell>
+                <TableCell>Volume</TableCell>
+                <TableCell>Cost</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
               {data
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+                  let head = null;
+                  if (row.date !== currentDate) {
+                    currentDate = row.date;
+                    head = row.date;
+                  }
                   return (
-                    <TableRow hover tabIndex={-1} key={row.name}>
-                      {/* <TableCell padding="checkbox"></TableCell> */}
-                      <TableCell component="th" scope="row" padding="none">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">
+                    <React.Fragment key={row.id}>
+                      {head &&
+                      <TableRow>
+                        <TableCell colSpan={6} scope="row">
+                          <b>{moment(row.date).format("ddd, MMM Do YYYY")}</b>
+                        </TableCell>
+                        </TableRow>
+                        }
+                      <TableRow hover >
+                        <TableCell scope="row">
+                          {vehiclesNames[row.vehicle_id]} - 
+                          <b>{row.status}</b> - {row.id}
+                        </TableCell>
+                        <TableCell>{row.time}</TableCell>
+                        {/* <TableCell align="right">
                         {moment(row.date).format("dddd, MMMM Do YYYY,")}
-                      </TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
-                    </TableRow>
+                      </TableCell> */}
+                        <TableCell>{row.odometer}</TableCell>
+                        <TableCell>{row.volume}</TableCell>
+                        <TableCell>{row.cost}</TableCell>
+                        <TableCell>Actions</TableCell>
+                      </TableRow>
+                    </React.Fragment>
                   );
                 })}
             </TableBody>
