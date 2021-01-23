@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -79,8 +79,8 @@ const useStyles = makeStyles((theme) => ({
 export default function DataGrid() {
   const classes = useStyles();
 
-  const [page, setPage] = React.useState(0);
-  const [data, setData] = React.useState(rows);
+  const [page, setPage] = useState(0);
+  const [data, setData] = useState(rows);
   const rowsPerPage = 10;
 
   const handleChangePage = (newPage) => {
@@ -92,7 +92,7 @@ export default function DataGrid() {
 
     setData([...data.sort(compare)]);
   };
-  React.useEffect(() => {
+  useEffect(() => {
     SortData("date");
   }, []);
   return (

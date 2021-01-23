@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, ButtonGroup, Button, Typography, Menu, MenuItem, Fade } from "@material-ui/core";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
@@ -8,8 +8,8 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 const Actions = ({handleRequestSort, count, page, onChangePage, rowsPerPage}) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [sortType, setSortType] = React.useState('date');
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [sortType, setSortType] = useState('date');
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
