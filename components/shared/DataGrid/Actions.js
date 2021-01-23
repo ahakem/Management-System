@@ -100,6 +100,20 @@ const Actions = ({
           >
             status
           </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleRequestSort("odometer"), handleClose("odometer");
+            }}
+          >
+            odometer
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleRequestSort("cost"), handleClose("cost");
+            }}
+          >
+            cost
+          </MenuItem>
         </Menu>
       </div>
     </Box>

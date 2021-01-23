@@ -18,10 +18,10 @@ export default async (req, res) => {
                 status:"active",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:155500,
                 volume:50,
                 fuel_types:"gas",
-                cost:68054.344
+                cost:565656
               },
               {
                 id:2,
@@ -29,10 +29,10 @@ export default async (req, res) => {
                 status:"out of service",
                 time:"14:30",
                 date:'2021-1-5',
-                odometer:3434.34,
+                odometer:1434.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:68054
               },
               {
                 id:3,
@@ -43,7 +43,7 @@ export default async (req, res) => {
                 odometer:500.34,
                 volume:50,
                 fuel_types:"gas",
-                cost:68054.344
+                cost:99999333
               },
               {
                 id:4,
@@ -51,10 +51,10 @@ export default async (req, res) => {
                 status:"active",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:2,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:777777
               },
               {
                 id:5,
@@ -62,10 +62,10 @@ export default async (req, res) => {
                 status:"active",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:333,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:454545454
               },
               {
                 id:6,
@@ -73,10 +73,10 @@ export default async (req, res) => {
                 status:"active",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:555,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:11232232
               },
               {
                 id:7,
@@ -84,7 +84,7 @@ export default async (req, res) => {
                 status:"active",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:566,
                 volume:50,
                 fuel_types:"diesel",
                 cost:68054.344
@@ -95,10 +95,10 @@ export default async (req, res) => {
                 status:"out of service",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:77.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:8977655
               },
               {
                 id:9,
@@ -106,10 +106,10 @@ export default async (req, res) => {
                 status:"active",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:8834.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:1123
               },
               {
                 id:10,
@@ -117,10 +117,10 @@ export default async (req, res) => {
                 status:"out of service",
                 time:"14:30",
                 date:'2021-2-1',
-                odometer:3434.34,
+                odometer:9434.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:9342343
               }
             ],
             vehicles_names:{
