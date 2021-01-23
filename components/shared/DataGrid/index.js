@@ -8,7 +8,10 @@ import {
   TableHead,
   TableRow,
   Paper,
+  IconButton,
 } from "@material-ui/core";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment";
 import Actions from "components/shared/DataGrid/Actions";
 import { axios, urls } from "config/axios";
@@ -67,12 +70,14 @@ export default function DataGrid() {
           >
             <TableHead>
               <TableRow>
-                <TableCell>Vehicle</TableCell>
-                <TableCell>Time</TableCell>
-                <TableCell>Total km</TableCell>
-                <TableCell>Volume</TableCell>
-                <TableCell>Cost</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell className={classes.headCell}>Vehicle</TableCell>
+                <TableCell className={classes.headCell}>Time</TableCell>
+                <TableCell className={classes.headCell}>Total km</TableCell>
+                <TableCell className={classes.headCell}>Volume</TableCell>
+                <TableCell className={classes.headCell}>Cost</TableCell>
+                <TableCell align="right" className={classes.headCell}>
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -87,25 +92,30 @@ export default function DataGrid() {
                   return (
                     <React.Fragment key={row.id}>
                       {head && (
-                        <TableRow>
+                        <TableRow className={classes.dateRow}>
                           <TableCell colSpan={6} scope="row">
-                            <b>{moment(row.date).format("ddd, MMM Do YYYY")}</b>
+                            <b>{moment(row.date).format("ddd, MMM D, YYYY")}</b>
                           </TableCell>
                         </TableRow>
                       )}
-                      <TableRow hover>
+                      <TableRow>
                         <TableCell scope="row">
                           {vehiclesNames[row.vehicle_id]} -<b>{row.status}</b> -{" "}
                           {row.id}
                         </TableCell>
                         <TableCell>{row.time}</TableCell>
-                        {/* <TableCell align="right">
-                        {moment(row.date).format("dddd, MMMM Do YYYY,")}
-                      </TableCell> */}
+
                         <TableCell>{row.odometer}</TableCell>
                         <TableCell>{row.volume}</TableCell>
                         <TableCell>{row.cost}</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <TableCell align="right">
+                          <IconButton aria-label="Edit" >
+                            <EditIcon style={{color:"#FE4D5C"}}/>
+                          </IconButton>
+                          <IconButton aria-label="delete" >
+                            <DeleteOutlineIcon style={{color:"#FFAB2B"}}/>
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     </React.Fragment>
                   );
@@ -133,5 +143,16 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 750,
+    border: "1px solid #E8ECEF",
+  },
+  headCell: {
+    background: "#F8FAFB",
+    color: theme.palette.secondary.main,
+    fontSize: 12,
+  },
+  dateRow: {
+    background: "#F8FAFB",
+    fontSize: 12,
+    letterSpacing: 0.3,
   },
 }));
