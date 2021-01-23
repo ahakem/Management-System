@@ -15,13 +15,26 @@ import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment";
 import Actions from "components/shared/DataGrid/Actions";
 import { axios, urls } from "config/axios";
-
+import DialogForm from "components/shared/DataGrid/Dilog";
 export default function DataGrid() {
   const classes = useStyles();
 
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
   const [vehiclesNames, SetVehiclesNames] = useState({});
+
+  //
+  const [openModel, setOpenModel] = React.useState(false);
+  const [formData, setFormData] = React.useState(null);
+
+  const handleClickOpenModel = (data) => {
+    setFormData(data)
+    setOpenModel(true);
+  };
+  const handleCloseModel = () => {
+    setOpenModel(false);
+  };
+
 
   const rowsPerPage = 7;
   const handleChangePage = (newPage) => {
@@ -53,6 +66,7 @@ export default function DataGrid() {
   let currentDate = null;
   return (
     <div className={classes.root}>
+     
       <Actions
         handleRequestSort={SortData}
         count={data.length}
@@ -109,7 +123,7 @@ export default function DataGrid() {
                         <TableCell>{row.volume}</TableCell>
                         <TableCell>{row.cost}</TableCell>
                         <TableCell align="right">
-                          <IconButton aria-label="Edit" >
+                          <IconButton aria-label="Edit"  onClick={()=>{handleClickOpenModel(row)}} >
                             <EditIcon style={{color:"#FE4D5C"}}/>
                           </IconButton>
                           <IconButton aria-label="delete" >
@@ -124,6 +138,9 @@ export default function DataGrid() {
           </Table>
         </TableContainer>
       </Paper>
+      {formData &&
+      <DialogForm vehiclesNames={vehiclesNames} data={formData} openModel={openModel} handleCloseModel={handleCloseModel}/>
+    }
     </div>
   );
 }
