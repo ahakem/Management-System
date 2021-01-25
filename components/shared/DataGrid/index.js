@@ -128,7 +128,7 @@ const DataGrid =(props) => {
                           <IconButton aria-label="Edit"  onClick={()=>{handleClickOpenModel(row)}} >
                             <EditIcon style={{color:"#FE4D5C"}}/>
                           </IconButton>
-                          <IconButton aria-label="delete" >
+                          <IconButton aria-label="delete" onClick={()=>{remove(row.id)}} >
                             <DeleteOutlineIcon style={{color:"#FFAB2B"}}/>
                           </IconButton>
                         </TableCell>
