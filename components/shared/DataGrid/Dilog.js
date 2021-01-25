@@ -178,7 +178,7 @@ export default function DialogForm({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseModel} color="primary">
+          <Button autoFocus onClick={handleCloseModel} variant="contained" color="primary">
             Save changes
           </Button>
         </DialogActions>
@@ -239,6 +239,5 @@ const DialogActions = withStyles((theme) => ({
   root: {
     margin: 0,
     padding: theme.spacing(1),
-    minWidth: 500,
   },
 }))(MuiDialogActions);
