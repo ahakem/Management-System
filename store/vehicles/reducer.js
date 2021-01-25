@@ -2,7 +2,14 @@ import { vehicleActionTypes } from './action'
 
 const vehicles = (state = {vehicles_info:[],vehicles_names:{}}, action) => {
   switch (action.type) {
-    
+    case vehicleActionTypes.INIT_VEHICLES:
+      return {
+        ...action.data
+      }
+      case vehicleActionTypes.INIT_VEHICLES:
+      return {
+        ...action.data
+      }
     case vehicleActionTypes.UPDATE_VEHICLE:
       return {
         ...state

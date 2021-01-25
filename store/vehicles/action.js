@@ -1,7 +1,7 @@
 export const vehicleActionTypes = {
   UPDATE_VEHICLE: 'UPDATE_VEHICLE',
   DELETE_VEHICLE: 'DELETE_VEHICLE',
-  ADD_VEHICLE: 'DELETE_VEHICLE',
+  INIT_VEHICLES: 'DELETE_VEHICLE',
 }
 
 
@@ -19,9 +19,9 @@ export const deleteVehicle = (id) => {
   }
 }
 
-export const addVehicle = (data) => {
+export const initVehicles = (data) => {
   return { 
-    type: vehicleActionTypes.DELETE_VEHICLE,
+    type: vehicleActionTypes.INIT_VEHICLES,
     data: data,
   }
 }

@@ -16,9 +16,13 @@ import moment from "moment";
 import Actions from "components/shared/DataGrid/Actions";
 import { axios, urls } from "config/axios";
 import DialogForm from "components/shared/DataGrid/Dilog";
-export default function DataGrid() {
-  const classes = useStyles();
+import { connect } from 'react-redux'
+import { updateVehicle, deleteVehicle, initVehicles } from 'store/vehicles/action'
 
+const DataGrid =(props) => {
+  
+  const classes = useStyles();
+  const {vehicles, init, update, remove} = props
   const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
   const [vehiclesNames, SetVehiclesNames] = useState({});
@@ -50,6 +54,7 @@ export default function DataGrid() {
     axios
       .get(urls.vehicles)
       .then((res) => {
+        init(res.data.data)
         SetVehiclesNames(res.data.data.vehicles_names);
         SortData("date", res.data.data.vehicles_info);
       })
@@ -144,7 +149,19 @@ export default function DataGrid() {
     </div>
   );
 }
-
+const mapStateToProps = (state) => {
+  return {
+    vehicles: { ...state.vehicle }
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    init: (data) => dispatch(initVehicles(data)),
+    update: (data) => dispatch(updateVehicle(data)),
+    remove: (id) => dispatch(deleteVehicle(id))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(DataGrid)
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
