@@ -6,9 +6,11 @@ import theme from '../src/theme';
 import Layout from '../components/layout'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-
+import { Provider } from 'react-redux';
+import { useStore } from 'store/store'
 export default function MyApp(props) {
   const { Component, pageProps } = props;
+  const store = useStore(pageProps.initialReduxState)
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -19,7 +21,7 @@ export default function MyApp(props) {
   }, []);
 
   return (
-    <React.Fragment>
+    <Provider store={store}>
       <Head>
         <title>My page</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -33,7 +35,7 @@ export default function MyApp(props) {
         </Layout>
         </MuiPickersUtilsProvider>
       </ThemeProvider>
-    </React.Fragment>
+    </Provider>
   );
 }
 
