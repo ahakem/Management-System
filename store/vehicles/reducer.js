@@ -6,9 +6,10 @@ const vehicles = (state = {vehicles_info:[],vehicles_names:{}}, action) => {
       return {
         ...action.data
       }
-      case vehicleActionTypes.INIT_VEHICLES:
+      case vehicleActionTypes.SORT_VEHICLES:
       return {
-        ...action.data
+        ...state,
+        vehicles_info:[...action.data]
       }
     case vehicleActionTypes.UPDATE_VEHICLE:
       return {

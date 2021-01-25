@@ -17,22 +17,19 @@ import Actions from "components/shared/DataGrid/Actions";
 import { axios, urls } from "config/axios";
 import DialogForm from "components/shared/DataGrid/Dilog";
 import { connect } from 'react-redux'
-import { updateVehicle, deleteVehicle, initVehicles } from 'store/vehicles/action'
+import { updateVehicle, deleteVehicle, initVehicles, sortVehicles } from 'store/vehicles/action'
 
 const DataGrid =(props) => {
   
   const classes = useStyles();
-  const {vehicles, init, update, remove} = props
+  const {vehicles, init, update, remove, sort} = props
+  
   const [page, setPage] = useState(0);
-  const [data, setData] = useState([]);
-  const [vehiclesNames, SetVehiclesNames] = useState({});
-
-  //
   const [openModel, setOpenModel] = React.useState(false);
   const [formData, setFormData] = React.useState(null);
 
-  const handleClickOpenModel = (data) => {
-    setFormData(data)
+  const handleClickOpenModel = (rowData) => {
+    setFormData(rowData)
     setOpenModel(true);
   };
   const handleCloseModel = () => {
@@ -45,9 +42,9 @@ const DataGrid =(props) => {
     setPage(newPage);
   };
 
-  const SortData = (property, _data = data) => {
+  const SortData = (property, _data = vehicles.vehicles_info) => {
     const compare = (a, b) => (a[property] < b[property] ? -1 : 1);
-    setData([..._data.sort(compare)]);
+    sort([..._data.sort(compare)]);
   };
 
   useEffect(() => {
@@ -55,7 +52,6 @@ const DataGrid =(props) => {
       .get(urls.vehicles)
       .then((res) => {
         init(res.data.data)
-        SetVehiclesNames(res.data.data.vehicles_names);
         SortData("date", res.data.data.vehicles_info);
       })
       .catch((error) => {
@@ -66,7 +62,7 @@ const DataGrid =(props) => {
       });
   }, []);
   useEffect(() => {
-    console.log("data", data);
+    console.log("data", vehicles);
   });
   let currentDate = null;
   return (
@@ -74,7 +70,7 @@ const DataGrid =(props) => {
      
       <Actions
         handleRequestSort={SortData}
-        count={data.length}
+        count={vehicles.vehicles_info.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
@@ -100,7 +96,8 @@ const DataGrid =(props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data
+              { vehicles && vehicles.vehicles_info &&
+              vehicles.vehicles_info
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   let head = null;
@@ -119,7 +116,7 @@ const DataGrid =(props) => {
                       )}
                       <TableRow>
                         <TableCell scope="row">
-                          {vehiclesNames[row.vehicle_id]} -<b>{row.status}</b> -{" "}
+                          {vehicles.vehicles_names[row.vehicle_id]} -<b>{row.status}</b> -{" "}
                           {row.id}
                         </TableCell>
                         <TableCell>{row.time}</TableCell>
@@ -144,21 +141,23 @@ const DataGrid =(props) => {
         </TableContainer>
       </Paper>
       {formData &&
-      <DialogForm vehiclesNames={vehiclesNames} data={formData} openModel={openModel} handleCloseModel={handleCloseModel}/>
+      <DialogForm vehiclesNames={vehicles.vehicles_names} data={formData} openModel={openModel} handleCloseModel={handleCloseModel}/>
     }
     </div>
   );
 }
 const mapStateToProps = (state) => {
   return {
-    vehicles: { ...state.vehicle }
+    vehicles: { ...state.vehicles }
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     init: (data) => dispatch(initVehicles(data)),
     update: (data) => dispatch(updateVehicle(data)),
-    remove: (id) => dispatch(deleteVehicle(id))
+    remove: (id) => dispatch(deleteVehicle(id)),
+    sort : (data) => dispatch(sortVehicles(data)),
+    
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DataGrid)
