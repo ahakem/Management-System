@@ -17,8 +17,8 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { DatePicker } from "@material-ui/pickers";
-import AccountCircle from '@material-ui/icons/AccountCircle';
-
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import EventIcon from '@material-ui/icons/Event';
 export default function DialogForm({
   openModel,
   handleCloseModel,
@@ -31,6 +31,11 @@ export default function DialogForm({
     setAge(event.target.value);
   };
   const [selectedDate, handleDateChange] = useState(new Date());
+  const [currency, setCurrency] = React.useState("EUR");
+
+  const handleChangeSelect = (event) => {
+    setCurrency(event.target.value);
+  };
 
   return (
     <div>
@@ -78,35 +83,96 @@ export default function DialogForm({
                   onChange={handleDateChange}
                   animateYearScrolling
                   TextFieldComponent={TextField}
-                  
                   startAdornment={
                     <InputAdornment position="end">
-                      <AccountCircle />
+                      <EventIcon />
                     </InputAdornment>
                   }
                 />
               </FormControl>
+              
             </Grid>
             <Grid item xs={6} md={3}>
               <FormControl className={classes.formControl}>
                 <InputLabel className={classes.label} id="Vehicle">
-                  {" ."}
+                  Start Time
                 </InputLabel>
                 <TextField
-                  endAdornment={
-                    <InputAdornment position="start">
-                      AM
-                    </InputAdornment>
-                  }
-              />
+                type="time"
+                startAdornment={
+                  <InputAdornment position="end">
+                    <ScheduleIcon />
+                  </InputAdornment>
+                }
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12} md={6}>
               <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">
-                  Vehicle
+                <InputLabel className={classes.label} id="Odometer">
+                  Odometer
                 </InputLabel>
-                <TextField />
+                <TextField
+                  type="number"
+                  endAdornment={
+                    <InputAdornment position="start">KMs</InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl className={classes.formControl}>
+                <InputLabel className={classes.label} id="Odometer">
+                  Volume
+                </InputLabel>
+                <TextField
+                  type="number"
+                  endAdornment={
+                    <InputAdornment position="start">Ltrs</InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl className={classes.formControl}>
+                <InputLabel className={classes.label} id="fuel">
+                  Fuel Type (optional)
+                </InputLabel>
+                <Select
+                  labelId="fuel"
+                  id="fuel"
+                  value={age}
+                  onChange={handleChange}
+                  input={<TextField />}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>11</MenuItem>
+                  <MenuItem value={2}>22</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <FormControl className={classes.formControl}>
+                <InputLabel className={classes.label} id="filling">
+                  Filling Type (optional)
+                </InputLabel>
+                <Select
+                  labelId="filling"
+                  id="filling"
+                  value={age}
+                  onChange={handleChange}
+                  input={<TextField />}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>11</MenuItem>
+                  <MenuItem value={2}>22</MenuItem>
+                </Select>
               </FormControl>
             </Grid>
           </Grid>

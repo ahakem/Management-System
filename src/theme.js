@@ -45,6 +45,7 @@ const theme = createMuiTheme({
         fontSize: 14,     
         position: "static !important",
         transform: "translate(0, 0) scale(1) !important",
+        color:"#778CA2"
       }
     }
   },
