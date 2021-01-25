@@ -73,7 +73,6 @@ const AppToolBar = ({ open, handleDrawerToggle }) => {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              inputProps={{ "aria-label": "search" }}
             />
             <div className={classes.sectionDesktop}>
               <IconButton
