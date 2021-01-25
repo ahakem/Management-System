@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Grid, Container } from "@material-ui/core";
+import React, { Fragment, useState } from "react";
+import { Button, Grid, Container, InputAdornment } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
@@ -16,6 +16,119 @@ import Select from "@material-ui/core/Select";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import InputBase from "@material-ui/core/InputBase";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { DatePicker } from "@material-ui/pickers";
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+export default function DialogForm({
+  openModel,
+  handleCloseModel,
+  data,
+  vehiclesNames,
+}) {
+  const classes = useStyles();
+  const [age, setAge] = React.useState("");
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+  const [selectedDate, handleDateChange] = useState(new Date());
+
+  return (
+    <div>
+      <Dialog
+        onClose={handleCloseModel}
+        open={openModel}
+        maxWidth="md"
+        fullWidth={true}
+      >
+        <DialogTitle onClose={handleCloseModel}>Edit Fuel Entry</DialogTitle>
+        <DialogContent dividers>
+          <Grid container spacing={2}>
+            <Grid item xs={12} lg={12}>
+              <FormControl className={classes.formControl}>
+                <InputLabel className={classes.label} id="Vehicle">
+                  Vehicle
+                </InputLabel>
+                <Select
+                  labelId="Vehicle"
+                  id="Vehicle"
+                  value={age}
+                  onChange={handleChange}
+                  input={<TextField />}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {Object.keys(vehiclesNames).map((item) => (
+                    <MenuItem key={item} value={item}>
+                      {vehiclesNames[item]}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={6} md={3}>
+              <FormControl className={classes.formControl}>
+                <InputLabel className={classes.label} id="Vehicle">
+                  Start Date
+                </InputLabel>
+                <DatePicker
+                  label="Basic example"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  animateYearScrolling
+                  TextFieldComponent={TextField}
+                  
+                  startAdornment={
+                    <InputAdornment position="end">
+                      <AccountCircle />
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={6} md={3}>
+              <FormControl className={classes.formControl}>
+                <InputLabel className={classes.label} id="Vehicle">
+                  {" ."}
+                </InputLabel>
+                <TextField
+                  endAdornment={
+                    <InputAdornment position="start">
+                      AM
+                    </InputAdornment>
+                  }
+              />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <FormControl className={classes.formControl}>
+                <InputLabel className={classes.label} id="Vehicle">
+                  Vehicle
+                </InputLabel>
+                <TextField />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleCloseModel} color="primary">
+            Save changes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    width: "100%",
+    marginBottom: theme.spacing(2),
+  },
+  label: {
+    marginBottom: theme.spacing(1),
+  },
+}));
 
 const styles = (theme) => ({
   root: {
@@ -63,87 +176,3 @@ const DialogActions = withStyles((theme) => ({
     minWidth: 500,
   },
 }))(MuiDialogActions);
-
-export default function DialogForm({
-  openModel,
-  handleCloseModel,
-  data,
-  vehiclesNames,
-}) {
-  const classes = useStyles();
-  const [age, setAge] = React.useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-  return (
-    <div>
-      <Dialog
-        onClose={handleCloseModel}
-        open={openModel}
-        maxWidth="md"
-        fullWidth={true}
-      >
-        <DialogTitle onClose={handleCloseModel}>Edit Fuel Entry</DialogTitle>
-        <DialogContent dividers>
-          <Grid container spacing={2}>
-            <Grid item xs={12} lg={12} >
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">Vehicle</InputLabel>
-                <Select
-                  labelId="Vehicle"
-                  id="Vehicle"
-                  value={age}
-                  onChange={handleChange}
-                  input={<TextField />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {Object.keys(vehiclesNames).map((item) => (
-                    <MenuItem key={item} value={item}>
-                      {vehiclesNames[item]}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={6} md={3}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">Vehicle</InputLabel>
-                <TextField />
-              </FormControl>
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">Vehicle</InputLabel>
-                <TextField />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">Vehicle</InputLabel>
-                <TextField />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleCloseModel} color="primary">
-            Save changes
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-}
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    width:'100%',
-    marginBottom:theme.spacing(2),
-  },
-  label:{
-    marginBottom:theme.spacing(1),
-  }
-}));

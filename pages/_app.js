@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../src/theme';
 import Layout from '../components/layout'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -23,10 +25,13 @@ export default function MyApp(props) {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </React.Fragment>
   );
