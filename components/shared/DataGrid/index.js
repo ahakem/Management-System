@@ -143,7 +143,7 @@ const DataGrid =(props) => {
         </TableContainer>
       </Paper>
       {formData &&
-      <DialogForm vehiclesNames={vehicles.vehicles_names} data={formData} openModel={openModel} handleCloseModel={handleCloseModel}/>
+      <DialogForm vehiclesNames={vehicles.vehicles_names} setFormData={setFormData} data={formData} openModel={openModel} handleCloseModel={handleCloseModel}/>
     }
     </div>
   );

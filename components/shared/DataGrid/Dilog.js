@@ -24,18 +24,25 @@ export default function DialogForm({
   handleCloseModel,
   data,
   vehiclesNames,
+  setFormData
 }) {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
   const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-  const [selectedDate, handleDateChange] = useState(new Date());
-  const [currency, setCurrency] = React.useState("EUR");
 
-  const handleChangeSelect = (event) => {
-    setCurrency(event.target.value);
+    setFormData({
+      ...data,
+      [event.target.name]:event.target.value
+    });
   };
+
+  const handleDateChange = (value) => {
+    setFormData({
+      ...data,
+      date:value
+    });
+  };
+
+
 
   return (
     <div>
@@ -56,9 +63,10 @@ export default function DialogForm({
                 <Select
                   labelId="Vehicle"
                   id="Vehicle"
-                  value={age}
+                  value={data.vehicle_id}
                   onChange={handleChange}
                   input={<TextField />}
+                  name="vehicle_id"
                 >
                   <MenuItem value="">
                     <em>None</em>
@@ -74,13 +82,13 @@ export default function DialogForm({
 
             <Grid item xs={6} md={3}>
               <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">
+                <InputLabel className={classes.label} id="date">
                   Start Date
                 </InputLabel>
                 <DatePicker
-                  label="Basic example"
-                  value={selectedDate}
                   onChange={handleDateChange}
+                  value={data.date}
+                  name="date"
                   animateYearScrolling
                   TextFieldComponent={TextField}
                   startAdornment={
@@ -99,6 +107,9 @@ export default function DialogForm({
                 </InputLabel>
                 <TextField
                 type="time"
+                name="time"
+                onChange={handleChange}
+                value={data.time}
                 startAdornment={
                   <InputAdornment position="end">
                     <ScheduleIcon />
@@ -114,6 +125,9 @@ export default function DialogForm({
                 </InputLabel>
                 <TextField
                   type="number"
+                  name="odometer"
+                  value={data.odometer}
+                  onChange={handleChange}
                   endAdornment={
                     <InputAdornment position="start">KMs</InputAdornment>
                   }
@@ -122,11 +136,14 @@ export default function DialogForm({
             </Grid>
             <Grid item xs={12} md={6}>
               <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Odometer">
+                <InputLabel className={classes.label} id="volume">
                   Volume
                 </InputLabel>
                 <TextField
                   type="number"
+                  value={data.volume}
+                  name="volume"
+                  onChange={handleChange}
                   endAdornment={
                     <InputAdornment position="start">Ltrs</InputAdornment>
                   }
@@ -136,21 +153,22 @@ export default function DialogForm({
 
             <Grid item xs={12} md={6}>
               <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="fuel">
+                <InputLabel className={classes.label} id="fuel_types">
                   Fuel Type (optional)
                 </InputLabel>
                 <Select
-                  labelId="fuel"
-                  id="fuel"
-                  value={age}
+                  labelId="fuel_types"
+                  id="fuel_types"
+                  name="fuel_types"
+                  value={data.fuel_types}
                   onChange={handleChange}
                   input={<TextField />}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={1}>11</MenuItem>
-                  <MenuItem value={2}>22</MenuItem>
+                  <MenuItem value="gasoline">Gasoline</MenuItem>
+                  <MenuItem value="diesel">Diesel</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -163,15 +181,15 @@ export default function DialogForm({
                 <Select
                   labelId="filling"
                   id="filling"
-                  value={age}
+                  value={data.filling}
                   onChange={handleChange}
                   input={<TextField />}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={1}>11</MenuItem>
-                  <MenuItem value={2}>22</MenuItem>
+                  <MenuItem value={1}>Type 1</MenuItem>
+                  <MenuItem value={2}>Type 2</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

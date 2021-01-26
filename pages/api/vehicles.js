@@ -16,11 +16,11 @@ export default async (req, res) => {
                 id:1,
                 vehicle_id:100,
                 status:"active",
-                time:"14:30",
+                time:"02:30",
                 date:'2021-2-1',
                 odometer:155500,
                 volume:50,
-                fuel_types:"gas",
+                fuel_types:"gasoline",
                 cost:565656
               },
               {
@@ -42,7 +42,7 @@ export default async (req, res) => {
                 date:'2021-3-1',
                 odometer:500.34,
                 volume:50,
-                fuel_types:"gas",
+                fuel_types:"gasoline",
                 cost:99999333
               },
               {
@@ -53,7 +53,7 @@ export default async (req, res) => {
                 date:'2021-2-1',
                 odometer:2,
                 volume:50,
-                fuel_types:"diesel",
+                fuel_types:"gasoline",
                 cost:777777
               },
               {
@@ -75,7 +75,7 @@ export default async (req, res) => {
                 date:'2021-2-1',
                 odometer:555,
                 volume:50,
-                fuel_types:"diesel",
+                fuel_types:"gasoline",
                 cost:11232232
               },
               {
