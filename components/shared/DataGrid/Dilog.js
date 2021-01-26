@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { Button, Grid, Container, InputAdornment } from "@material-ui/core";
+import React from "react";
+import { Button, Grid,  InputAdornment } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
@@ -8,13 +8,10 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import TextField from "components/shared/TextField";
-
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import InputBase from "@material-ui/core/InputBase";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { DatePicker } from "@material-ui/pickers";
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -24,7 +21,8 @@ export default function DialogForm({
   handleCloseModel,
   data,
   vehiclesNames,
-  setFormData
+  setFormData,
+  submitData
 }) {
   const classes = useStyles();
   const handleChange = (event) => {
@@ -38,7 +36,7 @@ export default function DialogForm({
   const handleDateChange = (value) => {
     setFormData({
       ...data,
-      date:value
+      date:value.format("YYYY-MM-D")
     });
   };
 
@@ -196,7 +194,7 @@ export default function DialogForm({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleCloseModel} variant="contained" color="primary">
+          <Button autoFocus onClick={submitData} variant="contained" color="primary">
             Save changes
           </Button>
         </DialogActions>

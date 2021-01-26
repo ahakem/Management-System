@@ -16,30 +16,38 @@ import moment from "moment";
 import Actions from "components/shared/DataGrid/Actions";
 import { axios, urls, cancelToken } from "config/axios";
 import DialogForm from "components/shared/DataGrid/Dilog";
-import { connect } from 'react-redux'
-import { updateVehicle, deleteVehicle, initVehicles, sortVehicles } from 'store/vehicles/action'
+import { connect } from "react-redux";
+import {
+  updateVehicle,
+  deleteVehicle,
+  initVehicles,
+  sortVehicles,
+} from "store/vehicles/action";
 
-const DataGrid =(props) => {
-  
+const DataGrid = (props) => {
   const classes = useStyles();
-  const {vehicles, init, update, remove, sort} = props
-  
+  const { vehicles, init, update, remove, sort } = props;
+
   const [page, setPage] = useState(0);
   const [openModel, setOpenModel] = React.useState(false);
   const [formData, setFormData] = React.useState(null);
 
   const handleClickOpenModel = (rowData) => {
-    setFormData(rowData)
+    setFormData(rowData);
     setOpenModel(true);
   };
   const handleCloseModel = () => {
     setOpenModel(false);
   };
 
-
   const rowsPerPage = 7;
   const handleChangePage = (newPage) => {
     setPage(newPage);
+  };
+
+  const submitData = () => {
+    update(formData)
+    handleCloseModel()
   };
 
   const SortData = (property, _data = vehicles.vehicles_info) => {
@@ -51,7 +59,7 @@ const DataGrid =(props) => {
     axios
       .get(urls.vehicles)
       .then((res) => {
-        init(res.data.data)
+        init(res.data.data);
         SortData("date", res.data.data.vehicles_info);
       })
       .catch((error) => {
@@ -60,16 +68,14 @@ const DataGrid =(props) => {
       .then(() => {
         //
       });
-      return () => {
-        source.cancel('Operation canceled by the user.');
-      }
+    return () => {
+      source.cancel("Operation canceled by the user.");
+    };
   }, []);
-
 
   let currentDate = null;
   return (
     <div className={classes.root}>
-     
       <Actions
         handleRequestSort={SortData}
         count={vehicles.vehicles_info.length}
@@ -98,71 +104,90 @@ const DataGrid =(props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              { vehicles && vehicles.vehicles_info &&
-              vehicles.vehicles_info
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  let head = null;
-                  if (row.date !== currentDate) {
-                    currentDate = row.date;
-                    head = row.date;
-                  }
-                  return (
-                    <React.Fragment key={row.id}>
-                      {head && (
-                        <TableRow className={classes.dateRow}>
-                          <TableCell colSpan={6} scope="row">
-                            <b>{moment(row.date).format("ddd, MMM D, YYYY")}</b>
+              {vehicles &&
+                vehicles.vehicles_info &&
+                vehicles.vehicles_info
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    let head = null;
+                    if (row.date !== currentDate) {
+                      currentDate = row.date;
+                      head = row.date;
+                    }
+                    return (
+                      <React.Fragment key={row.id}>
+                        {head && (
+                          <TableRow className={classes.dateRow}>
+                            <TableCell colSpan={6} scope="row">
+                              <b>
+                                {moment(row.date).format("ddd, MMM D, YYYY")}
+                              </b>
+                            </TableCell>
+                          </TableRow>
+                        )}
+                        <TableRow>
+                          <TableCell scope="row">
+                            {vehicles.vehicles_names[row.vehicle_id]} -
+                            <b>{row.status}</b> - {row.id}
+                          </TableCell>
+                          <TableCell>{row.time}</TableCell>
+
+                          <TableCell>{row.odometer}</TableCell>
+                          <TableCell>{row.volume}</TableCell>
+                          <TableCell>{row.cost}</TableCell>
+                          <TableCell align="right">
+                            <IconButton
+                              aria-label="Edit"
+                              onClick={() => {
+                                handleClickOpenModel(row);
+                              }}
+                            >
+                              <EditIcon style={{ color: "#FE4D5C" }} />
+                            </IconButton>
+                            <IconButton
+                              aria-label="delete"
+                              onClick={() => {
+                                remove(row.id);
+                              }}
+                            >
+                              <DeleteOutlineIcon style={{ color: "#FFAB2B" }} />
+                            </IconButton>
                           </TableCell>
                         </TableRow>
-                      )}
-                      <TableRow>
-                        <TableCell scope="row">
-                          {vehicles.vehicles_names[row.vehicle_id]} -<b>{row.status}</b> -{" "}
-                          {row.id}
-                        </TableCell>
-                        <TableCell>{row.time}</TableCell>
-
-                        <TableCell>{row.odometer}</TableCell>
-                        <TableCell>{row.volume}</TableCell>
-                        <TableCell>{row.cost}</TableCell>
-                        <TableCell align="right">
-                          <IconButton aria-label="Edit"  onClick={()=>{handleClickOpenModel(row)}} >
-                            <EditIcon style={{color:"#FE4D5C"}}/>
-                          </IconButton>
-                          <IconButton aria-label="delete" onClick={()=>{remove(row.id)}} >
-                            <DeleteOutlineIcon style={{color:"#FFAB2B"}}/>
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    </React.Fragment>
-                  );
-                })}
+                      </React.Fragment>
+                    );
+                  })}
             </TableBody>
           </Table>
         </TableContainer>
       </Paper>
-      {formData &&
-      <DialogForm vehiclesNames={vehicles.vehicles_names} setFormData={setFormData} data={formData} openModel={openModel} handleCloseModel={handleCloseModel}/>
-    }
+      {formData && (
+        <DialogForm
+          vehiclesNames={vehicles.vehicles_names}
+          setFormData={setFormData}
+          data={formData}
+          openModel={openModel}
+          handleCloseModel={handleCloseModel}
+          submitData={submitData}
+        />
+      )}
     </div>
   );
-}
+};
 const mapStateToProps = (state) => {
   return {
-    vehicles: { ...state.vehicles }
-  }
-}
+    vehicles: { ...state.vehicles },
+  };
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     init: (data) => dispatch(initVehicles(data)),
     update: (data) => dispatch(updateVehicle(data)),
     remove: (id) => dispatch(deleteVehicle(id)),
-    sort : (data) => dispatch(sortVehicles(data)),
-    
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(DataGrid)
+    sort: (data) => dispatch(sortVehicles(data)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DataGrid);
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",

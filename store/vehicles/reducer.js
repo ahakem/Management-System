@@ -15,8 +15,12 @@ const vehicles = (
         vehicles_info: [...action.data],
       };
     case vehicleActionTypes.UPDATE_VEHICLE:
+      const index = state.vehicles_info.map((row)=> row.id).indexOf(action.data.id)
+      const cloneVehicles = [...state.vehicles_info];
+      cloneVehicles.splice(index, 0, action.data);
       return {
         ...state,
+        vehicles_info:cloneVehicles
       };
     case vehicleActionTypes.DELETE_VEHICLE:
       return {
