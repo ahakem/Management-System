@@ -14,7 +14,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment";
 import Actions from "components/shared/DataGrid/Actions";
-import { axios, urls } from "config/axios";
+import { axios, urls, cancelToken } from "config/axios";
 import DialogForm from "components/shared/DataGrid/Dilog";
 import { connect } from 'react-redux'
 import { updateVehicle, deleteVehicle, initVehicles, sortVehicles } from 'store/vehicles/action'
@@ -46,7 +46,7 @@ const DataGrid =(props) => {
     const compare = (a, b) => (a[property] < b[property] ? -1 : 1);
     sort([..._data.sort(compare)]);
   };
-
+  let source = cancelToken.source();
   useEffect(() => {
     axios
       .get(urls.vehicles)
@@ -60,10 +60,12 @@ const DataGrid =(props) => {
       .then(() => {
         //
       });
+      return () => {
+        source.cancel('Operation canceled by the user.');
+      }
   }, []);
-  useEffect(() => {
-    console.log("data", vehicles);
-  });
+
+
   let currentDate = null;
   return (
     <div className={classes.root}>
