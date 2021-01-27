@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid,  InputAdornment } from "@material-ui/core";
+import { Button, Grid,  InputAdornment , InputLabel, FormHelperText} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
@@ -8,7 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import TextField from "components/shared/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -16,30 +15,39 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { DatePicker } from "@material-ui/pickers";
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import EventIcon from '@material-ui/icons/Event';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object({
+  odometer: yup
+    .number()
+    .positive().required(),
+  volume: yup
+    .number()
+    .positive().required(),
+  time: yup
+    .string().required(),
+});
+// date and dropdowns are fourced for values
+
 export default function DialogForm({
   openModel,
   handleCloseModel,
   data,
   vehiclesNames,
-  setFormData,
   submitData
 }) {
   const classes = useStyles();
-  const handleChange = (event) => {
 
-    setFormData({
-      ...data,
-      [event.target.name]:event.target.value
-    });
-  };
-
-  const handleDateChange = (value) => {
-    setFormData({
-      ...data,
-      date:value.format("YYYY-M-D")
-    });
-  };
-
+  const formik = useFormik({
+    initialValues: {
+      ...data
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      submitData(values)
+    },
+  });
 
 
   return (
@@ -50,154 +58,185 @@ export default function DialogForm({
         maxWidth="md"
         fullWidth={true}
       >
+
+
         <DialogTitle onClose={handleCloseModel}>Edit Fuel Entry</DialogTitle>
-        <DialogContent dividers>
-          <Grid container spacing={2}>
-            <Grid item xs={12} lg={12}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">
-                  Vehicle
+        <form onSubmit={formik.handleSubmit}>
+
+          <DialogContent dividers>
+
+
+            <Grid container spacing={2}>
+              <Grid item xs={12} lg={12}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel className={classes.label} id="Vehicle">
+                    Vehicle
                 </InputLabel>
-                <Select
-                  labelId="Vehicle"
-                  id="Vehicle"
-                  value={data.vehicle_id}
-                  onChange={handleChange}
-                  input={<TextField />}
-                  name="vehicle_id"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {Object.keys(vehiclesNames).map((item) => (
-                    <MenuItem key={item} value={item}>
-                      {vehiclesNames[item]}
+                  <Select
+                    labelId="Vehicle"
+                    id="Vehicle"
+
+                    value={formik.values.vehicle_id}
+                    onChange={formik.handleChange}
+                    input={<TextField />}
+                    name="vehicle_id"
+
+                  >
+                    {Object.keys(vehiclesNames).map((item) => (
+                      <MenuItem key={item} value={item}>
+                        {vehiclesNames[item]}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={6} md={3}>
+                <FormControl error={formik.touched.date && Boolean(formik.errors.date)} className={classes.formControl}>
+                  <InputLabel className={classes.label} id="date">
+                    Start Date
+                </InputLabel>
+                  <DatePicker
+                    value={formik.values.date}
+                    onChange={val => {
+                      formik.setFieldValue("date", val.format("YYYY-M-D"));
+                    }}
+                    name="date"
+                    animateYearScrolling
+                    TextFieldComponent={TextField}
+                    startAdornment={
+                      <InputAdornment position="end">
+                        <EventIcon />
+                      </InputAdornment>
+                    }
+                  />
+                  <FormHelperText >{formik.touched.date && formik.errors.date}</FormHelperText>
+
+                </FormControl>
+
+              </Grid>
+              <Grid item xs={6} md={3}>
+                <FormControl error={formik.touched.time && Boolean(formik.errors.time)} className={classes.formControl}>
+                  <InputLabel className={classes.label} id="Vehicle">
+                    Start Time
+                </InputLabel>
+                  <TextField
+                    type="time"
+                    name="time"
+                    value={formik.values.time}
+                    onChange={formik.handleChange}
+                    startAdornment={
+                      <InputAdornment position="end">
+                        <ScheduleIcon />
+                      </InputAdornment>
+                    }
+                  />
+                  <FormHelperText >{formik.touched.time && formik.errors.time}</FormHelperText>
+
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormControl error={formik.touched.odometer && Boolean(formik.errors.odometer)}
+                  className={classes.formControl}>
+                  <InputLabel className={classes.label} id="Odometer">
+                    Odometer
+                </InputLabel>
+                  <TextField
+                    id="odometer"
+                    name="odometer"
+                    endAdornment={
+                      <InputAdornment position="start">KMs</InputAdornment>
+                    }
+                    value={formik.values.odometer}
+                    onChange={formik.handleChange}
+                  />
+                  <FormHelperText >{formik.touched.odometer && formik.errors.odometer}</FormHelperText>
+
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <FormControl error={formik.touched.volume && Boolean(formik.errors.volume)}
+                  className={classes.formControl}>
+                  <InputLabel className={classes.label} id="volume">
+                    Volume
+                </InputLabel>
+                  <TextField
+                    name="volume"
+                    value={formik.values.volume}
+                    onChange={formik.handleChange}
+                    endAdornment={
+                      <InputAdornment position="start">Ltrs</InputAdornment>
+                    }
+                  />
+                  <FormHelperText >{formik.touched.volume && formik.errors.volume}</FormHelperText>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <FormControl className={classes.formControl} error={formik.touched.fuel_types && Boolean(formik.errors.fuel_types)}>
+                  <InputLabel className={classes.label} id="fuel_types">
+                    Fuel Type (optional)
+                </InputLabel>
+                  <Select
+                    labelId="fuel_types"
+                    id="fuel_types"
+                    name="fuel_types"
+                    value={formik.values.fuel_types}
+                    onChange={formik.handleChange}
+
+                    input={<TextField />}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
                     </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                    <MenuItem value="gasoline">Gasoline</MenuItem>
+                    <MenuItem value="diesel">Diesel</MenuItem>
+                  </Select>
+                  <FormHelperText >{formik.touched.fuel_types && formik.errors.fuel_types}</FormHelperText>
+
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel className={classes.label} id="filling">
+                    Filling Type (optional)
+                </InputLabel>
+                  <Select
+                    labelId="filling"
+                    id="filling"
+                    name="filling"
+                    value={formik.values.filling}
+                    onChange={formik.handleChange}
+                    input={<TextField />}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={1}>Type 1</MenuItem>
+                    <MenuItem value={2}>Type 2</MenuItem>
+                  </Select>
+                  <FormHelperText >{formik.touched.filling && formik.errors.filling}</FormHelperText>
+
+                </FormControl>
+              </Grid>
             </Grid>
 
-            <Grid item xs={6} md={3}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="date">
-                  Start Date
-                </InputLabel>
-                <DatePicker
-                  onChange={handleDateChange}
-                  value={data.date}
-                  name="date"
-                  animateYearScrolling
-                  TextFieldComponent={TextField}
-                  startAdornment={
-                    <InputAdornment position="end">
-                      <EventIcon />
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-              
-            </Grid>
-            <Grid item xs={6} md={3}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Vehicle">
-                  Start Time
-                </InputLabel>
-                <TextField
-                type="time"
-                name="time"
-                onChange={handleChange}
-                value={data.time}
-                startAdornment={
-                  <InputAdornment position="end">
-                    <ScheduleIcon />
-                  </InputAdornment>
-                }
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="Odometer">
-                  Odometer
-                </InputLabel>
-                <TextField
-                  type="number"
-                  name="odometer"
-                  value={data.odometer}
-                  onChange={handleChange}
-                  endAdornment={
-                    <InputAdornment position="start">KMs</InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="volume">
-                  Volume
-                </InputLabel>
-                <TextField
-                  type="number"
-                  value={data.volume}
-                  name="volume"
-                  onChange={handleChange}
-                  endAdornment={
-                    <InputAdornment position="start">Ltrs</InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Grid>
 
-            <Grid item xs={12} md={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="fuel_types">
-                  Fuel Type (optional)
-                </InputLabel>
-                <Select
-                  labelId="fuel_types"
-                  id="fuel_types"
-                  name="fuel_types"
-                  value={data.fuel_types}
-                  onChange={handleChange}
-                  input={<TextField />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="gasoline">Gasoline</MenuItem>
-                  <MenuItem value="diesel">Diesel</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
 
-            <Grid item xs={12} md={6}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.label} id="filling">
-                  Filling Type (optional)
-                </InputLabel>
-                <Select
-                  labelId="filling"
-                  id="filling"
-                  value={data.filling}
-                  onChange={handleChange}
-                  input={<TextField />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>Type 1</MenuItem>
-                  <MenuItem value={2}>Type 2</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={submitData} variant="contained" color="primary">
-            Save changes
+          </DialogContent>
+
+          <DialogActions>
+            {/* <Button color="primary" variant="contained" fullWidth type="submit">
+          Submit
+        </Button> */}
+            <Button type="submit" autoFocus variant="contained" color="primary">
+              Save changes
           </Button>
-        </DialogActions>
+          </DialogActions>
+        </form>
+        {/* </form> */}
       </Dialog>
     </div>
   );
