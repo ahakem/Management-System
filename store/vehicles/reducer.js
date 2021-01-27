@@ -18,7 +18,6 @@ const vehicles = (
       const index = state.vehicles_info.map((row)=> row.id).indexOf(action.data.id)
       const cloneVehicles = [...state.vehicles_info];
       cloneVehicles.splice(index, 1, action.data);
-      debugger
       return {
         ...state,
         vehicles_info:cloneVehicles

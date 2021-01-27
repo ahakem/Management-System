@@ -38,6 +38,8 @@ const DataGrid = (props) => {
   };
   const handleCloseModel = () => {
     setOpenModel(false);
+    setFormData(null);
+
   };
 
   const rowsPerPage = 7;
@@ -45,8 +47,8 @@ const DataGrid = (props) => {
     setPage(newPage);
   };
 
-  const submitData = () => {
-    update(formData)
+  const submitData = (data) => {
+    update(data)
     handleCloseModel()
   };
 
