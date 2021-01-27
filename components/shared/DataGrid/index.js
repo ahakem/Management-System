@@ -110,7 +110,7 @@ const DataGrid = (props) => {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     let head = null;
-                    if (row.date !== currentDate) {
+                    if (row.date != currentDate) {
                       currentDate = row.date;
                       head = row.date;
                     }

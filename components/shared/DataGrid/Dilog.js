@@ -36,7 +36,7 @@ export default function DialogForm({
   const handleDateChange = (value) => {
     setFormData({
       ...data,
-      date:value.format("YYYY-MM-D")
+      date:value.format("YYYY-M-D")
     });
   };
 
