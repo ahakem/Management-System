@@ -38,13 +38,7 @@ export default function Layout(props) {
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerToggle}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
+          <img alt="PLN Asset Management System logo" src="imgs/logo.png"/>
         </div>
         <Divider />
         <List>
@@ -53,7 +47,7 @@ export default function Layout(props) {
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText className={classes.item} primary={text} />
             </ListItem>
           ))}
         </List>
@@ -64,7 +58,7 @@ export default function Layout(props) {
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText className={classes.item} primary={text} />
             </ListItem>
           ))}
         </List>
@@ -103,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   content: {
     flexGrow: 1,
@@ -121,4 +115,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  item:{
+    color:theme.palette.secondary.main,
+  }
 }));
