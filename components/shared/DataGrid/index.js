@@ -9,6 +9,8 @@ import {
   TableRow,
   Paper,
   IconButton,
+  Box,
+  Avatar
 } from "@material-ui/core";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
@@ -129,8 +131,18 @@ const DataGrid = (props) => {
                         )}
                         <TableRow>
                           <TableCell scope="row">
-                            {vehicles.vehicles_names[row.vehicle_id]} -
-                            <b>{row.status}</b> - {row.id}
+                            <Box alignItems="center" display="flex">
+                              <Avatar className={classes.photo} alt={vehicles.vehicles_names[row.vehicle_id]} src={row.photo} />
+                              <Box> {vehicles.vehicles_names[row.vehicle_id]} -
+                              <Box className={`${classes.status}
+                              ${row.status == 'active' && classes.active}
+                              ${row.status === "out of service" && classes.outOfService}
+                              ${row.status === "in shop" && classes.inShop}
+                              
+                             `}>{row.status}</Box> </Box>
+
+
+                            </Box>
                           </TableCell>
                           <TableCell>{row.time}</TableCell>
 
@@ -217,4 +229,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     letterSpacing: 0.3,
   },
+  photo: {
+    marginRight: theme.spacing(2)
+  },
+  status: {
+    display: "block",
+  },
+  active: { color: "#21A11E" },
+  inShop: { color: "#C1931B" },
+  outOfService: { color: "#C11B1B" },
 }));

@@ -15,13 +15,14 @@ export default async (req, res) => {
               {
                 id:1,
                 vehicle_id:100,
-                status:"active",
+                status:"in shop",
                 time:"02:30",
                 date:'2021-2-1',
                 odometer:155500,
                 volume:50,
                 fuel_types:"gasoline",
-                cost:565656
+                cost:565656,
+                photo:"/imgs/car1.jpg"
               },
               {
                 id:2,
@@ -32,18 +33,20 @@ export default async (req, res) => {
                 odometer:1434.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054
+                cost:68054,
+                photo:"/imgs/car3.jpg"
               },
               {
                 id:3,
                 vehicle_id:100,
-                status:"in Shop",
+                status:"in shop",
                 time:"14:30",
                 date:'2021-3-1',
                 odometer:500.34,
                 volume:50,
                 fuel_types:"gasoline",
-                cost:99999333
+                cost:99999333,
+                photo:"/imgs/car2.png"
               },
               {
                 id:4,
@@ -54,7 +57,8 @@ export default async (req, res) => {
                 odometer:2,
                 volume:50,
                 fuel_types:"gasoline",
-                cost:777777
+                cost:777777,
+                photo:"/imgs/car1.jpg"
               },
               {
                 id:5,
@@ -65,18 +69,20 @@ export default async (req, res) => {
                 odometer:333,
                 volume:50,
                 fuel_types:"diesel",
-                cost:454545454
+                cost:454545454,
+                photo:"/imgs/car2.png"
               },
               {
                 id:6,
                 vehicle_id:300,
-                status:"active",
+                status:"in shop",
                 time:"14:30",
                 date:'2021-2-1',
                 odometer:555,
                 volume:50,
                 fuel_types:"gasoline",
-                cost:11232232
+                cost:11232232,
+                photo:"/imgs/car3.jpg"
               },
               {
                 id:7,
@@ -87,7 +93,8 @@ export default async (req, res) => {
                 odometer:566,
                 volume:50,
                 fuel_types:"diesel",
-                cost:68054.344
+                cost:68054.344,
+                photo:"/imgs/car1.jpg"
               },
               {
                 id:8,
@@ -98,7 +105,8 @@ export default async (req, res) => {
                 odometer:77.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:8977655
+                cost:8977655,
+                photo:"/imgs/car2.png"
               },
               {
                 id:9,
@@ -109,7 +117,8 @@ export default async (req, res) => {
                 odometer:8834.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:1123
+                cost:1123,
+                photo:"/imgs/car1.jpg"
               },
               {
                 id:10,
@@ -120,7 +129,8 @@ export default async (req, res) => {
                 odometer:9434.34,
                 volume:50,
                 fuel_types:"diesel",
-                cost:9342343
+                cost:9342343,
+                photo:"/imgs/car2.png"
               }
             ],
             vehicles_names:{
