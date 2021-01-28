@@ -15,9 +15,9 @@ import {
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment";
-import Actions from "components/shared/DataGrid/Actions";
+import Actions from "components/DataGrid/Actions";
 import { axios, urls, cancelToken } from "config/axios";
-import DialogForm from "components/shared/DataGrid/Dilog";
+import DialogForm from "components/DataGrid/Dilog";
 import { connect } from "react-redux";
 import {
   updateVehicle,
@@ -140,8 +140,6 @@ const DataGrid = (props) => {
                               ${row.status === "in shop" && classes.inShop}
                               
                              `}>{row.status}</Box> </Box>
-
-
                             </Box>
                           </TableCell>
                           <TableCell>{row.time}</TableCell>

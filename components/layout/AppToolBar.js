@@ -91,7 +91,7 @@ const AppToolBar = ({ open, handleDrawerToggle }) => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <Avatar alt="Ahmed Hakim" src="/hakim.jpg" />
+                <Avatar alt="Ahmed Hakim" src="/imgs/hakim.jpg" />
 
               </IconButton>
             </div>
