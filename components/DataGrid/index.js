@@ -143,7 +143,7 @@ const DataGrid = (props) => {
 
                           <TableCell>{row.odometer}</TableCell>
                           <TableCell>{row.volume}</TableCell>
-                          <TableCell>{row.cost}</TableCell>
+                          <TableCell>{new Intl.NumberFormat('en-EG', { style: 'currency', currency: 'EGP' }).format(row.cost)}</TableCell>
                           <TableCell align="right">
                             <IconButton
                               aria-label="Edit"
