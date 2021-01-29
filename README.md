@@ -14,7 +14,7 @@ yarn run dev
 - `NextJS` - Mostly for Mocking the API
 - `Axios` - For Network Calls
 - `Redux` - Manging the State
-- `Formik`, `Yup` for Forms Validation
+- `Formik`, `Yup` For Forms Validation
 - `Moment` -  For Displaying and manging Date/Time
 - `notistack` For displaying Global Errors
 
@@ -45,7 +45,7 @@ const App = () => {
 - Delete
 
 ## To Do
-- Applaying the Side Menu items with the design, and updating The icon
-- Changingsome Icons from Matrial UI icons to the one came with the Design, after allowing the exporting the Icons in Figma
+- Applaying the Side Menu items with the design, and updating The icons.
+- Changingsome Icons from Matrial UI icons to the one came with the Design, after allowing the exporting the Icons in Figma.
 - Cheking with the Designer the behavier of the time picker in the edit overlay and update it after agrement.
--update Sorting after Edit with the Selected Sort type
+-update Sorting after Edit with the Selected Sort type.
