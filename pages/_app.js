@@ -8,6 +8,8 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import { Provider } from "react-redux";
 import { useStore } from "store/store";
+import { SnackbarProvider } from 'notistack';
+
 export default function MyApp(props) {
   const { Component, pageProps } = props;
   const store = useStore(pageProps.initialReduxState);
@@ -30,12 +32,15 @@ export default function MyApp(props) {
         />
       </Head>
       <ThemeProvider theme={theme}>
+      <SnackbarProvider>
+
         <MuiPickersUtilsProvider utils={MomentUtils}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <Layout>
             <Component {...pageProps} />
           </Layout>
         </MuiPickersUtilsProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   );

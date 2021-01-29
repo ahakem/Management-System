@@ -25,7 +25,7 @@ import {
   initVehicles,
   sortVehicles,
 } from "store/vehicles/action";
-
+import useHandleResponse from 'hooks/useHandleResponse'
 const DataGrid = (props) => {
   const classes = useStyles();
   const { vehicles, init, update, remove, sort } = props;
@@ -33,7 +33,7 @@ const DataGrid = (props) => {
   const [page, setPage] = useState(0);
   const [openModel, setOpenModel] = React.useState(false);
   const [formData, setFormData] = React.useState(null);
-
+  const {handleError} = useHandleResponse();
   const handleClickOpenModel = (rowData) => {
     setFormData(rowData);
     setOpenModel(true);
@@ -67,11 +67,8 @@ const DataGrid = (props) => {
         SortData("date", res.data.data.vehicles_info);
       })
       .catch((error) => {
-        console.log(error);
+        handleError(error);
       })
-      .then(() => {
-        //
-      });
     return () => {
       source.cancel("Operation canceled by the user.");
     };
